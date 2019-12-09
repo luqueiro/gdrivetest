@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -88,9 +90,12 @@ public class MainActivity extends AppCompatActivity {
                                 .setApplicationName("G Drive Test")
                                 .build();
 
-                        Toast.makeText(MainActivity.this, "Log in successful", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this, "Log in successful as " + googleSignInAccount.getEmail(), Toast.LENGTH_LONG).show();
+                        String TAG = "MainActivity";
+                        Log.d(TAG, "Signed in as " + googleSignInAccount.getEmail());
+                        System.out.println("Signed In as " + googleSignInAccount.getDisplayName());
                         serviceHelper = new DriveServiceHelper(googleDriveService);
-                        serviceHelper.queryFiles();
+                        serviceHelper.queryFile();
 
                     }
                 })
@@ -100,5 +105,11 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
+    }
+
+    public void uploadFile (View v){
+
+        serviceHelper.createFilePDF("/storage/emulated/0/Download/Cerveza alto.PDF");
+        Toast.makeText(getApplicationContext(), "Uploading file", Toast.LENGTH_LONG).show();
     }
 }
